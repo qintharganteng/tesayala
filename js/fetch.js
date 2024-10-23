@@ -15,11 +15,12 @@ console.log("FETCH");
         const row = document.createElement("tr");
 
         row.innerHTML = `
-          <td class="whitespace-nowrap px-4 bg-white text-sm font-medium text-coolGray-800 text-left">${job.id}</td>
-          <td class="whitespace-nowrap px-4 bg-white text-sm font-medium text-coolGray-800 text-center">${job.name}</td>
-          <td class="whitespace-nowrap px-4 bg-white text-sm font-medium text-coolGray-500 text-left">${job.phone}</td>
-          <td class="whitespace-nowrap px-4 bg-white text-sm font-medium text-green-500 text-left">${job.email}</td>
-          <td class="whitespace-nowrap px-4 bg-white text-sm font-medium text-green-500 text-left">${job.alamat}</td>
+          <td class="whitespace-nowrap px-4 bg-white text-sm font-medium text-coolGray-800 text-left" style="border: 1px solid #111; padding: 8px;">${job.id}</td>
+          <td class="whitespace-nowrap px-4 bg-white text-sm font-medium text-coolGray-800 text-center" style="border: 1px solid #111; padding: 8px;">${job.name}</td>
+          <td class="whitespace-nowrap px-4 bg-white text-sm font-medium text-coolGray-500 text-left" style="border: 1px solid #111; padding: 8px;">${job.phone}</td>
+          <td class="whitespace-nowrap px-4 bg-white text-sm font-medium text-green-500 text-left" style="border: 1px solid #111; padding: 8px;">${job.email}</td>
+          <td class="whitespace-nowrap px-4 bg-white text-sm font-medium text-green-500 text-left" style="border: 1px solid #111; padding: 8px;">${job.alamat}</td>
+
         `;
 
         tableBody.appendChild(row);
