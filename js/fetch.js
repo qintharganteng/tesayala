@@ -1,11 +1,13 @@
-//fetch
-import { get } from "https://bukulapak.github.io/api/process.js"; 
 let urlAPI = "https://msg.ulbi.ac.id/task/recruitment/all";
-get(urlAPI,isiTablePresensi);
-function isiTablePresensi(results){
+
+fetch(urlAPI)
+  .then(response => response.json())
+  .then(results => isiTablePresensi(results))
+  .catch(error => console.error('Error:', error));
+
+function isiTablePresensi(results) {
     console.log(results);
 }
-
 
 
 
