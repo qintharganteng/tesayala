@@ -1,6 +1,7 @@
-let urlAPI = "https://msg.ulbi.ac.id/task/recruitment/all";
+console.log("FETCH")
 
-fetch(urlAPI)
-  .then(response => response.json())
-  .then(results => console.log(results))
-  .catch(error => console.error('Error:', error));
+const endpoint = "https://msg.ulbi.ac.id/task/recruitment/all"
+
+fetch(endpoint)
+.then((data) => console.log(data))
+.then((result) => console.log(result))
