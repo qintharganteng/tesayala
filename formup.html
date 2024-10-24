@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Update</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-md rounded-lg p-8 w-96">
+        <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Form Update Pengguna</h1>
+        <form id="updateForm">
+            <div class="mb-4">
+                <label for="nama" class="block text-gray-700 text-sm font-bold mb-2">Nama:</label>
+                <input type="text" id="nama" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan nama Anda">
+            </div>
+
+            <div class="mb-4">
+                <label for="phone_number" class="block text-gray-700 text-sm font-bold mb-2">Nomor HP:</label>
+                <input type="tel" id="phone_number" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan nomor HP Anda">
+            </div>
+
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+                <input type="email" id="email" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan email Anda">
+            </div>
+
+            <div class="mb-4">
+                <label for="alamat" class="block text-gray-700 text-sm font-bold mb-2">Alamat:</label>
+                <input type="text" id="alamat" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan alamat Anda">
+            </div>
+
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Update</button>
+            </div>
+
+            <div id="message" class="mt-4 hidden text-center"></div> <!-- Message area -->
+        </form>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const jobId = urlParams.get('id'); // Mengambil ID dari URL
+
+        if (jobId) {
+            fetch(`https://msg.ulbi.ac.id/task/recruitment?id=${jobId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Mengisi formulir dengan data yang diterima
+                    document.getElementById("nama").value = data.name;
+                    document.getElementById("phone_number").value = data.phone;
+                    document.getElementById("email").value = data.email;
+                    document.getElementById("alamat").value = data.alamat;
+                })
+                .catch(error => {
+                    console.error("Fetch error:", error);
+                    showMessage('Gagal mengambil data!', 'error'); // Show error message
+                });
+        }
+
+        // Menangani pengiriman form untuk update
+        document.getElementById('updateForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah submit default
+            updateData(jobId);
+        });
+
+        // Fungsi untuk mengupdate data
+        function updateData(id) {
+            const data = {
+                name: document.getElementById("nama").value,
+                phone: document.getElementById("phone_number").value,
+                email: document.getElementById("email").value,
+                alamat: document.getElementById("alamat").value
+            };
+
+            fetch(`https://msg.ulbi.ac.id/task/recruitment?id=${id}`, {
+                method: 'PUT', // Menggunakan PUT untuk update
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                showMessage('Data berhasil diupdate!', 'success'); // Show success message
+            })
+            .catch(error => {
+                console.error("Update error:", error);
+                showMessage('Gagal memperbarui data!', 'error'); // Show error message
+            });
+        }
+
+        // Function to display messages
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = message;
+            messageDiv.classList.remove('hidden');
+            messageDiv.classList.add(type === 'success' ? 'text-green-500' : 'text-red-500');
+
+            // Remove previous animations
+            messageDiv.classList.remove('animate-pulse');
+
+            // Add a simple effect
+            messageDiv.classList.add('animate-pulse');
+            setTimeout(() => {
+                messageDiv.classList.remove('animate-pulse');
+            }, 500);
+        }
+    </script>
+</body>
+</html>

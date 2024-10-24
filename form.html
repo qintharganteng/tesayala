@@ -1,94 +1,44 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Pengguna</title>
+    <title>Form Pendaftaran</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="/js/controller/post.js" defer></script>
 </head>
-<body>
-    <div class="container">
-        <h1>Form Pengguna</h1>
-        <form id="form">
-            <label for="nama">Nama:</label>
-            <input type="text" id="nama" required>
 
-            <label for="phone_number">Nomor HP:</label>
-            <input type="tel" id="phone_number" required>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-md rounded-lg p-8 w-96">
+        <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Form Pendaftaran</h1>
+        <form id="registrationForm">
+            <div class="mb-4">
+                <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nama:</label>
+                <input type="text" id="name" name="name" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan nama Anda">
+            </div>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" required>
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+                <input type="email" id="email" name="email" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan email Anda">
+            </div>
 
-            <label for="alamat">Alamat:</label>
-            <input type="text" id="alamat" required>
+            <div class="mb-4">
+                <label for="phone" class="block text-gray-700 text-sm font-bold mb-2">Telepon:</label>
+                <input type="text" id="phone" name="phone" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan nomor telepon Anda">
+            </div>
 
-            <button type="submit">Kirim</button>
+            <div class="mb-4">
+                <label for="alamat" class="block text-gray-700 text-sm font-bold mb-2">Alamat:</label>
+                <input type="text" id="alamat" name="alamat" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan alamat Anda">
+            </div>
+
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Kirim</button>
+            </div>
         </form>
     </div>
-
-    <script>
-        // URL API untuk mengirim data
-        const urlPOST = 'https://msg.ulbi.ac.id/task/recruitment';
-
-        // Fungsi untuk mengambil nilai dari input berdasarkan ID
-        function getValue(id) {
-            return document.getElementById(id).value.trim();
-        }
-
-        // Fungsi untuk mengirim data
-        function pushData() {
-            // Mengambil nilai dari input
-            const nama = getValue("nama");
-            const phone_number = getValue("phone_number");
-            const email = getValue("email");
-            const alamat = getValue("alamat");
-
-            // Menciptakan objek data
-            let data = {
-                name: nama,
-                phone_number: phone_number,
-                email: email,
-                alamat: alamat
-            };
-
-            console.log('Data yang akan dikirim:', data); // Log data untuk debug
-
-            // Mengirim data ke API menggunakan fungsi postData
-            postData(urlPOST, data);
-        }
-
-        // Menangani event submit pada form
-        const form = document.getElementById('form');
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); // Mencegah form dari submit default
-            pushData(); // Memanggil fungsi pushData
-        });
-
-        // Fungsi untuk mengirim data ke API
-        function postData(url, data) {
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json' // Mengirim sebagai JSON
-                },
-                body: JSON.stringify(data) // Mengubah objek data menjadi string JSON
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(errData => {
-                        throw new Error(errData.message || 'Something went wrong');
-                    });
-                }
-                return response.json(); // Mengubah respons ke format JSON
-            })
-            .then(data => {
-                console.log('Sukses:', data);
-                alert('Data berhasil disimpan!'); // Notifikasi keberhasilan
-            })
-            .catch(err => {
-                console.error('Kesalahan:', err);
-                alert('Data gagal disimpan: ' + err.message); // Notifikasi kesalahan
-            });
-        }
-    </script>
 </body>
+
+<script src="/js/controller/post.js"></script>
 </html>
