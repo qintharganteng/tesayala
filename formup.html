@@ -17,7 +17,7 @@
 
             <div class="mb-4">
                 <label for="phone_number" class="block text-gray-700 text-sm font-bold mb-2">Nomor HP:</label>
-                <input type="tel" id="phone_number" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan nomor HP Anda">
+                <input type="tel" id="phone" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Masukkan nomor HP Anda">
             </div>
 
             <div class="mb-4">
@@ -56,6 +56,7 @@
                     document.getElementById("phone_number").value = data.phone;
                     document.getElementById("email").value = data.email;
                     document.getElementById("alamat").value = data.alamat;
+                    console.log('Data berhasil diambil:', data); // Log data yang diambil
                 })
                 .catch(error => {
                     console.error("Fetch error:", error);
@@ -78,6 +79,8 @@
                 alamat: document.getElementById("alamat").value
             };
 
+            console .log('Data yang akan diupdate:', data); // Log data yang akan diupdate
+
             fetch(`https://msg.ulbi.ac.id/task/recruitment?id=${id}`, {
                 method: 'PUT', // Menggunakan PUT untuk update
                 headers: {
@@ -89,6 +92,7 @@
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
+                console.log('Respons dari server:', response); // Log respons dari server
                 showMessage('Data berhasil diupdate!', 'success'); // Show success message
             })
             .catch(error => {
